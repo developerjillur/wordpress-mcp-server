@@ -1,0 +1,28 @@
+{
+  "name": "wordpress-mcp-server",
+  "version": "1.0.0",
+  "description": "Model Context Protocol server for WordPress database operations",
+  "type": "module",
+  "main": "enhanced-wp-mcp.js",
+  "scripts": {
+    "start": "node enhanced-wp-mcp.js",
+    "test": "node test.js",
+    "setup": "node setup.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.4.0",
+    "mysql2": "^3.6.5",
+    "dotenv": "^16.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/developerjillur/wordpress-mcp-server.git"
+  },
+  "keywords": ["mcp", "wordpress", "database", "mysql", "ai", "copilot", "vscode"],
+  "author": "Jillur Rahman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/developerjillur/wordpress-mcp-server/issues"
+  },
+  "homepage": "https://github.com/developerjillur/wordpress-mcp-server#readme"
+}

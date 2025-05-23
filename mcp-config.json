@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "wordpress-db": {
+      "command": "node",
+      "args": ["/Users/developerjillur/Local Sites/myspace/app/public/mcp-server/index.js"],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "wordpress-db-enhanced": {
+      "command": "node",
+      "args": ["/Users/developerjillur/Local Sites/myspace/app/public/mcp-server/enhanced-wp-mcp.js"],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}
