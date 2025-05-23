@@ -19,7 +19,7 @@ import { parseWPConfig } from './wp-config-reader.js';
 /**
  * WordPress Admin MCP Server Class
  */
-class WordPressAdminServer {
+export class WordPressAdminServer {
   constructor() {
     // Initialize MCP server
     this.server = new Server();
@@ -30,7 +30,20 @@ class WordPressAdminServer {
     // Initialize database settings
     this.dbSettings = null;
     
+    // Flag for WP-CLI availability
+    this.wpCliAvailable = false;
+    
     console.log('Initializing WordPress Admin MCP Server...');
+  }
+  
+  /**
+   * Check if WP-CLI is available and return appropriate error if not
+   */
+  checkWPCLI() {
+    if (!this.wpCliAvailable) {
+      return { error: "WP-CLI is not available. Please install WP-CLI for full functionality." };
+    }
+    return null;
   }
   
   /**
@@ -41,10 +54,18 @@ class WordPressAdminServer {
       // Get WordPress database settings
       this.dbSettings = await parseWPConfig();
       
-      // Initialize WP-CLI executor
-      await this.wpCli.initialize();
+      // Try to initialize WP-CLI executor, but continue even if it fails
+      try {
+        await this.wpCli.initialize();
+        this.wpCliAvailable = true;
+        console.log('WordPress Admin MCP Server is ready with full WP-CLI functionality!');
+      } catch (error) {
+        this.wpCliAvailable = false;
+        console.warn(`WP-CLI not available: ${error.message}`);
+        console.warn('WordPress Admin MCP Server will operate in limited mode');
+        console.warn('To enable full functionality, please install WP-CLI');
+      }
       
-      console.log('WordPress Admin MCP Server is ready!');
       return true;
     } catch (error) {
       console.error('Failed to initialize WordPress Admin MCP Server:', error);
@@ -77,6 +98,10 @@ class WordPressAdminServer {
           properties: {},
         },
         handler: async () => {
+          if (!this.wpCliAvailable) {
+            return { error: "WP-CLI is not available. Please install WP-CLI for full functionality." };
+          }
+          
           try {
             return await this.wpCli.getCoreInfo();
           } catch (error) {
